@@ -1,0 +1,26 @@
+{
+  "name": "18-socialexperiment_api",
+  "version": "1.0.0",
+  "description": "An API that uses MongoDB and Mongoose",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pilotguide9897/SocialExperiment_API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pilotguide9897/SocialExperiment_API/issues"
+  },
+  "homepage": "https://github.com/Pilotguide9897/SocialExperiment_API#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
