@@ -1,10 +1,15 @@
-const { ObjectId } = require("mongoose").Types;
-const {} = require("");
+//const { ObjectId } = require("mongoose").Types;
+const { User, Thought, Reactions } = require("../models/index");
 
 module.exports = {
   async getThoughts(req, res) {
     try {
-    } catch (err) {}
+      const result = await Thought.find({});
+      res.status(200).json(result);
+    } catch (err) {
+      console.log("We have encountered an issue...");
+      res.status(500).json({ error: "Something went wrong" });
+    }
   },
   async postThought(req, res) {
     try {

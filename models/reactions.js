@@ -18,11 +18,13 @@ const reactionSchema = new mongoose.Schema(
     createdAt: {
         type: Date,
         default: Date.now(), // I will need to make sure that this is formatted correctly.
-        get: function (value) 
-            mmddyyyy: function (value) {
+         get: function (value) {
             const month = value.getMonth() + 1;
             const day = value.getDate();
             const year = value.getFullYear();
             return `${month}/${day}/${year}`;
-      },
-  }
+        }
+    }
+  });
+
+  module.exports = { reactionSchema };

@@ -1,10 +1,15 @@
-const { ObjectId } = require("mongoose").Types;
-const {} = require("");
+//const { ObjectId } = require("mongoose").Types;
+const { User, Thought, Reactions } = require("../models/index");
 
 module.exports = {
   async getUsers(req, res) {
     try {
-    } catch (err) {}
+      const result = await User.find({});
+      res.status(200).json(result);
+    } catch (err) {
+      console.log('We have encountered an issue...');
+      res.status(500).json({ error: 'Something went wrong' });
+    }
   },
   async createUser(req, res) {
     try {
@@ -12,7 +17,9 @@ module.exports = {
   },
   async getUserById(req, res) {
     try {
-    } catch (err) {}
+    } catch (err) {
+      // handle user not found.
+    }
   },
   async updateUserById(req, res) {
     try {
@@ -20,7 +27,9 @@ module.exports = {
   },
   async deleteUserById(req, res) {
     try {
-    } catch (err) {}
+    } catch (err) {
+      // handle user not found.
+    }
   },
   async addFriend(req, res) {
     try {
@@ -28,6 +37,8 @@ module.exports = {
   },
   async removeFriend(req, res) {
     try {
-    } catch (err) {}
+    } catch (err) {
+      // handle friend not found.
+    }
   },
 };
