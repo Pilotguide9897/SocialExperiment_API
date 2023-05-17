@@ -13,13 +13,23 @@ module.exports = {
   },
   async createUser(req, res) {
     try {
-    } catch (err) {}
+      const newUser = await User.create(req.body);
+      res.status(201).json(newUser);
+    } catch (err) {
+      res.status(500).json({ error: 'Something went wrong creating the new user' });
+    }
   },
   async getUserById(req, res) {
     try {
+        const seekUserById = await User.findById(req.params.userId);
+        if (!seekUserById) {
+            return res.status(404).json({ error: 'Unable to locate user with matching Id' });
+        }
+        res.status(200).json(seekUserById);
     } catch (err) {
-      // handle user not found.
+        res.status(500).json({ error: 'Something went wrong fetching your result' });
     }
+  }
   },
   async updateUserById(req, res) {
     try {
