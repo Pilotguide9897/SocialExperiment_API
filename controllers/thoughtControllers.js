@@ -11,13 +11,23 @@ module.exports = {
       res.status(500).json({ error: "Something went wrong fetching the thoughts" });
     }
   },
-  async postThought(req, res) {
+  async postThought(req, res) { // need to push the created thought to the associated user's thoughts array field.
     try {
-      const post = await Thought.create(req.body);
-      res.status(200).json(post);
+      const newThought = await Thought.create(req.body);
+      
+      await User.findByIdAndUpdate(
+        req.body.userId,
+        { $push: { thoughts: newThought._id } },
+        { new: true, runValidators: true }
+      );
+
+        if ()
+
+      res.status(200).json(newThought);
+
     } catch (err) {
       console.log( err, "We have encountered an unexpected issue");
-      res.status(500).json({ error: "Something went wrong postinng your thought" });
+      res.status(500).json({ error: "Something went wrong posting your thought" });
     }
     },
   async getThoughtById(req, res) {
@@ -60,12 +70,19 @@ module.exports = {
   },
   async createReaction(req, res) {
     try {
-      const thoughtWithNewReaction = await Thought.findById(req.params.thoughtId);
-      if (!thoughtWithNewReaction) {
-        return res.status(404).json({ error: 'Unable to locate a thought with the matching Id' });
-      }
-      thoughtWithNewReaction.reactions.push(req.body);
-      await thoughtWithNewReaction.save();
+      // const thoughtWithNewReaction = await Thought.findById(req.params.thoughtId);
+      // if (!thoughtWithNewReaction) {
+      //   return res.status(404).json({ error: 'Unable to locate a thought with the matching Id' });
+      // }
+      // thoughtWithNewReaction.reactions.push(req.body);
+      // await thoughtWithNewReaction.save();
+      const thought = await Thought.findByIdAndUpdate(
+            req.params.thoughtId,
+            { $push: { reactions: req.body } },
+            { new: true, runValidators: true }
+        );
+
+
     } catch (err) {
       console.log(err, "We have encountered an unexpected issue");
       res.status(500).json({ error: "Something went wrong creating the reaction" });
@@ -73,7 +90,14 @@ module.exports = {
   },
   async deleteReaction(req, res) { // How do I target a certain reaction?
     try {
-
+        // const thought = await Thought.findByIdAndUpdate(
+        //             req.params.thoughtId,
+        //             { $pull: { reactions: { reactionId: req.params.reactionId } } },
+        //             { new: true }
+        //         );
+        if (!thoughtToRemove) {
+          return res.status(404).json({ message: 'No thought with this id!' });
+        }
     } catch (err) {
       console.log(err, "We have encountered an unexpected issue");
       res.status(500).json({ error: "Something went wrong deleting the reaction" });
