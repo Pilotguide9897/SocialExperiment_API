@@ -31,19 +31,46 @@ module.exports = {
     }
   }
   },
-  async updateUserById(req, res) {
-    try {
-    } catch (err) {}
-  },
-  async deleteUserById(req, res) {
-    try {
-    } catch (err) {
-      // handle user not found.
+ async updateUserById(req, res) {
+  try {
+    const userToUpdate = await User.findByIdAndUpdate(req.params.userId, req.body, { new: true });
+    if (!userToUpdate) {
+        return res.status(404).json({ error: 'Unable to locate user with matching Id' });
+    } 
+    res.status(200).json(userToUpdate);
+  } catch (err) {
+    res.status(500).json({ error: 'Something went wrong updating the user' });
+  }
+},
+async deleteUserById(req, res) {
+  try {
+    const deleteResult = await User.deleteOne({ _id: req.params.userId });
+    if (deleteResult.deletedCount === 0) {
+      return res.status(400).json({ error: 'No matching user found to delete' });
     }
-  },
+    res.status(200).json({ message: 'User successfully deleted' });
+  } catch (err) {
+    res.status(500).json({ error: 'Something went wrong deleting the user' });
+  }
+},
   async addFriend(req, res) {
     try {
-    } catch (err) {}
+      const userWithNewFriend = await User.findById(req.params.id);
+      if (!userWithNewFriend) {
+        return res.status(404).json({ error: 'Unable to locate a user with the matching Id' });
+      }
+      const newFriend = await User.findById(req.params.friendId);
+      if (!newFriend) {
+        return res.status(404).json({ error: 'Unable to locate a friend with the matching Id' });
+      }
+
+      userWithNewFriend.friends.push(newFriend._id);
+      await userWithNewFriend.save();
+
+      res.status(200).json({ message: 'Friend added successfully' });
+    } catch (err) {
+      res.status(500).json({ error: 'Something went wrong when adding the new friend' });
+    }
   },
   async removeFriend(req, res) {
     try {
