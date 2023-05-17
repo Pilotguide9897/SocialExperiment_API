@@ -45,7 +45,7 @@ async deleteUserById(req, res) {
   try {
     const deleteResult = await User.deleteOne({ _id: req.params.userId });
     if (deleteResult.deletedCount === 0) {
-      return res.status(400).json({ error: 'No matching user found to delete' });
+      return res.status(404).json({ error: 'No matching user found to delete' }); // Would it be best to use status code 400 (bad request) or 404 (not found)?
     }
     res.status(200).json({ message: 'User successfully deleted' });
   } catch (err) {

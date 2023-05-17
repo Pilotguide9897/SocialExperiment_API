@@ -7,16 +7,16 @@ module.exports = {
       const result = await Thought.find({});
       res.status(200).json(result);
     } catch (err) {
-      console.log("We have encountered an issue");
+      console.log(err, "We have encountered an issue");
       res.status(500).json({ error: "Something went wrong fetching the thoughts" });
     }
   },
   async postThought(req, res) {
     try {
-      const post = await Thought.create(req.body.params);
+      const post = await Thought.create(req.body);
       res.status(200).json(post);
     } catch (err) {
-      console.log("We have encountered an unexpected issue");
+      console.log( err, "We have encountered an unexpected issue");
       res.status(500).json({ error: "Something went wrong postinng your thought" });
     }
     },
@@ -24,28 +24,52 @@ module.exports = {
     try {
       const result = await Thought.findById(req.params.thoughtId);
       if (!result) {
-        res.status(404).json({ error: "unable to locate a thought with that id" });
+        return res.status(404).json({ error: "unable to locate a thought with that id" });
       }
       res.status(200).json(result);
     } catch (err) {
-      console.log("We have encountered an unexpected issue");
+      console.log(err, "We have encountered an unexpected issue");
       res.status(500).json({ error: "Something went wrong fetching the thought" });
     }
   },
   async updateThoughtById(req, res) {
     try {
-    } catch (err) {}
+      const thoughtToUpdate = await Thought.findByIdAndUpdate(req.params.thoughtId, req.body, { new:true });
+      if (!thoughtToUpdate) {
+        return res
+          .status(404)
+          .json({ error: "Unable to locate thought with matching Id" });
+      }
+      res.status(200).json(thoughtToUpdate);
+    } catch (err) {
+      console.log(err, "We have encountered an unexpected issue");
+      res.status(500).json({ error: "Something went wrong updating the thought" });
+    }
   },
   async deleteThoughtById(req, res) {
     try {
-    } catch (err) {}
+      const deleteResult = await Thought.deleteOne({ _id: req.params.thoughtId });
+      if (deleteResult === 0) {
+        return res.status(400).json({ error: 'No matching thought found to delete'});
+      }
+      res.status(200).json({ message: 'Thought deleted successfully' });
+    } catch (err) {
+      console.log(err, "We have encountered an unexpected issue");
+      res.status(500).json({ error: "Something went wrong deleting the thought" });
+    }
   },
   async createReaction(req, res) {
     try {
-    } catch (err) {}
+    } catch (err) {
+      console.log(err, "We have encountered an unexpected issue");
+      res.status(500).json({ error: "Something went wrong creating the reaction" });
+    }
   },
   async deleteReaction(req, res) {
     try {
-    } catch (err) {}
+    } catch (err) {
+      console.log(err, "We have encountered an unexpected issue");
+      res.status(500).json({ error: "Something went wrong deleting the reaction" });
+    }
   },
 };

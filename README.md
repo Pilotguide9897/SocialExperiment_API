@@ -2,6 +2,7 @@
 
 ![]()
 
+A social networking web application back-end that allows users to share their thoughts, react to friends’ thoughts, and create a friend list. 
 
 ## Table of Contents
 - [Screenshots](#screenshots)
@@ -19,7 +20,7 @@
 
 ## Description
 
-
+The Social Experiment API is a backend application built for social media startups. It provides the necessary API endpoints to handle large amounts of unstructured data, making it perfect for a web application where users can share their thoughts, react to friends’ thoughts, and manage a friend list. This application utilizes Express.js for routing, a MongoDB database for data storage, and the Mongoose ODM for data modeling and management.
 
 The deployed application may be visited [here]().
 
