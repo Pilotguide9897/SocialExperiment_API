@@ -60,13 +60,20 @@ module.exports = {
   },
   async createReaction(req, res) {
     try {
+      const thoughtWithNewReaction = await Thought.findById(req.params.thoughtId);
+      if (!thoughtWithNewReaction) {
+        return res.status(404).json({ error: 'Unable to locate a thought with the matching Id' });
+      }
+      thoughtWithNewReaction.reactions.push(req.body);
+      await thoughtWithNewReaction.save();
     } catch (err) {
       console.log(err, "We have encountered an unexpected issue");
       res.status(500).json({ error: "Something went wrong creating the reaction" });
     }
   },
-  async deleteReaction(req, res) {
+  async deleteReaction(req, res) { // How do I target a certain reaction?
     try {
+
     } catch (err) {
       console.log(err, "We have encountered an unexpected issue");
       res.status(500).json({ error: "Something went wrong deleting the reaction" });
