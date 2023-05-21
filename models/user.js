@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       unique: true,
       required: true,
-      Validate: {
+      validate: {
         validator: function (v) {
            return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v);
         },
@@ -47,3 +47,5 @@ const userSchema = new mongoose.Schema(
 
 
 const User = mongoose.model('User', userSchema);
+
+module.exports = User;
