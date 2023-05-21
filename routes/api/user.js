@@ -14,10 +14,10 @@ const {
 } = require ('../../controllers')
 
 // /api/users
-router.route('/').get(getUsers).post(createUser);
+router.route('/').get(getUsers).post(createUser); // working.
 
 // /api/users/:id
-router.route('/:userId').get(getUserById).put(updateUserById).delete(deleteUserById);
+router.route('/:userId').get(getUserById).put(updateUserById).delete(deleteUserById); // working.
 
 // /api/users/:userId/friends/:friendId
 router.route('/:userId/friends/:friendId').post(addFriend).delete(removeFriend);

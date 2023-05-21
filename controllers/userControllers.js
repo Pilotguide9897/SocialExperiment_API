@@ -58,8 +58,9 @@ async deleteUserById(req, res) {
 },
   async addFriend(req, res) {
     try {
-      const userWithNewFriend = await User.findById(req.params.id);
+      const userWithNewFriend = await User.findById(req.params.userId);
       if (!userWithNewFriend) {
+        console.error(err);
         return res.status(404).json({ error: 'Unable to locate a user with the matching Id' });
       }
       const newFriend = await User.findById(req.params.friendId);
@@ -79,7 +80,7 @@ async deleteUserById(req, res) {
   async removeFriend(req, res) {
   try {
     const userToRemoveFriend = await User.findByIdAndUpdate(
-      req.params.id,
+      req.params.userId,
       { $pull: { friends: req.params.friendId } },
       { new: true }
     );
