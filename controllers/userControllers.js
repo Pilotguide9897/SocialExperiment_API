@@ -7,7 +7,7 @@ module.exports = {
       const result = await User.find({});
       res.status(200).json(result);
     } catch (err) {
-      console.log('We have encountered an issue...');
+      console.error(err);
       res.status(500).json({ error: 'Something went wrong' });
     }
   },
@@ -16,6 +16,7 @@ module.exports = {
       const newUser = await User.create(req.body);
       res.status(201).json(newUser);
     } catch (err) {
+      console.error(err);
       res.status(500).json({ error: 'Something went wrong creating the new user' });
     }
   },
@@ -27,6 +28,7 @@ module.exports = {
         }
         res.status(200).json(seekUserById);
     } catch (err) {
+        console.error(err);
         res.status(500).json({ error: 'Something went wrong fetching your result' });
     }
   },
@@ -38,6 +40,7 @@ module.exports = {
     } 
     res.status(200).json(userToUpdate);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Something went wrong updating the user' });
   }
 },
@@ -45,10 +48,11 @@ async deleteUserById(req, res) {
   try {
     const deleteResult = await User.deleteOne({ _id: req.params.userId });
     if (deleteResult.deletedCount === 0) {
-      return res.status(404).json({ error: 'No matching user found to delete' }); // Would it be best to use status code 400 (bad request) or 404 (not found)?
+      return res.status(404).json({ error: 'No matching user found to delete' });
     }
     res.status(200).json({ message: 'User successfully deleted' });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Something went wrong deleting the user' });
   }
 },
@@ -68,6 +72,7 @@ async deleteUserById(req, res) {
 
       res.status(200).json({ message: 'Friend added successfully' });
     } catch (err) {
+      console.error(err);
       res.status(500).json({ error: 'Something went wrong when adding the new friend' });
     }
 },
@@ -83,6 +88,7 @@ async deleteUserById(req, res) {
     }
     res.status(200).json(userToRemoveFriend);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'There was a problem removing this friend' });
   }
 }

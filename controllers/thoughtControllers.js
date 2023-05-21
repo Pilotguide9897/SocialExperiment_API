@@ -7,6 +7,7 @@ module.exports = {
       const result = await Thought.find({});
       res.status(200).json(result);
     } catch (err) {
+      console.error(err);
       console.log(err, "We have encountered an issue");
       res
         .status(500)
@@ -33,6 +34,7 @@ module.exports = {
 
       res.status(200).json(newThought);
     } catch (err) {
+      console.error(err);
       console.log(err, "We have encountered an unexpected issue");
       res
         .status(500)
@@ -49,6 +51,7 @@ module.exports = {
       }
       res.status(200).json(result);
     } catch (err) {
+      console.error(err);
       console.log(err, "We have encountered an unexpected issue");
       res
         .status(500)
@@ -69,6 +72,7 @@ module.exports = {
       }
       res.status(200).json(thoughtToUpdate);
     } catch (err) {
+      console.error(err);
       console.log(err, "We have encountered an unexpected issue");
       res
         .status(500)
@@ -87,6 +91,7 @@ module.exports = {
       }
       res.status(200).json({ message: "Thought deleted successfully" });
     } catch (err) {
+      console.error(err);
       console.log(err, "We have encountered an unexpected issue");
       res
         .status(500)
@@ -113,6 +118,7 @@ module.exports = {
       }
       res.status(200).json({ message: "Thought deleted successfully" });
     } catch (err) {
+      console.error(err);
       console.log(err, "We have encountered an unexpected issue");
       res
         .status(500)
@@ -121,7 +127,7 @@ module.exports = {
   },
   async deleteReaction(req, res) {
     try {
-      const thought = await Thought.findByIdAndUpdate(
+      const thoughtToRemove = await Thought.findByIdAndUpdate(
         req.params.thoughtId,
         { $pull: { reactions: { reactionId: req.params.reactionId } } },
         { new: true }
@@ -130,6 +136,7 @@ module.exports = {
         return res.status(404).json({ message: "No thought with this id!" });
       }
     } catch (err) {
+      console.error(err);
       console.log(err, "We have encountered an unexpected issue");
       res
         .status(500)
