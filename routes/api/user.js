@@ -1,6 +1,7 @@
 const router = require("express").Router();
 
 const {
+    userControllers: {
     getUsers,
     createUser,
     getUserById,
@@ -8,6 +9,8 @@ const {
     deleteUserById,
     addFriend,
     removeFriend
+    }
+    
 } = require ('../../controllers')
 
 // /api/users
