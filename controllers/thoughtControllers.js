@@ -110,6 +110,7 @@ module.exports = {
           .status(404)
           .json({ error: "Unable to locate a thought with the matching Id" });
       }
+      console.log(req.body);
       res.status(200).json({ message: "Reaction created successfully" });
     } catch (err) {
       console.error(err);

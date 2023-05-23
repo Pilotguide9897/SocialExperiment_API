@@ -3,7 +3,7 @@ const { default: mongoose } = require("mongoose");
 const reactionSchema = new mongoose.Schema({
   reactionId: {
     type: mongoose.Schema.Types.ObjectId,
-    default: new mongoose.Types.ObjectId(),
+    default: () => new mongoose.Types.ObjectId(),
   },
   reactionBody: {
     type: String,
@@ -17,14 +17,16 @@ const reactionSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now(), // I will need to make sure that this is formatted correctly.
+    default: Date.now,
     get: function (value) {
       const month = value.getMonth() + 1;
       const day = value.getDate();
       const year = value.getFullYear();
-      return `${month}/${day}/${year}`;
+      const hours = value.getHours();
+      const minutes = ("0" + value.getMinutes()).slice(-2);
+      return `${month}/${day}/${year} at ${hours}:${minutes}`;
     },
   },
 });
 
-  module.exports = { reactionSchema };
+module.exports = reactionSchema;
